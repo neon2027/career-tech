@@ -18,33 +18,5 @@
     </main>
     
     @vite('resources/js/app.js')
-    <script>
-        function scrollToNext(currentId) {
-        // Delay to allow Livewire DOM updates
-        setTimeout(() => {
-            const current = document.getElementById(`question-${currentId}`);
-            if (!current) return;
-
-            const allQuestions = document.querySelectorAll('[id^="question-"]');
-            for (let i = 0; i < allQuestions.length; i++) {
-                if (allQuestions[i].id === `question-${currentId}` && i + 1 < allQuestions.length) {
-                    const next = allQuestions[i + 1];
-
-                    // Center the next element in the viewport
-                    const elementTop = next.getBoundingClientRect().top + window.scrollY;
-                    const elementHeight = next.offsetHeight;
-                    const offset = elementTop - (window.innerHeight / 2) + (elementHeight / 2);
-
-                    window.scrollTo({
-                        top: offset,
-                        behavior: 'smooth'
-                    });
-
-                    break;
-                }
-            }
-        }, 150); // small delay for DOM update
-    }
-        </script>
 </body>
 </html>

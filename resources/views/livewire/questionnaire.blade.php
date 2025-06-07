@@ -8,16 +8,15 @@
     <div class="p-12 bg-gray-700 sticky top-0 z-10 shadow-lg">
         <h1 class="text-2xl text-center text-white font-bold">Career Tech Questionnaire</h1>
         <p class="text-center text-white mt-2">Please answer the following questions to help us understand your personality better.</p>
-
     </div>
     <div class="py-12 px-4 sm:px-6 lg:px-8">
         <div class="space-y-16">
-            @forelse($personalityQuestions as $q)
-                <div id="question-{{ $q->id }}">
+            @forelse($personalityQuestions as $index => $q)
+                <div id="question-{{ $index }}" class="transition-all duration-300 {{ $index === $currentQuestionIndex ? 'opacity-100' : 'opacity-50' }}">
                     <h1 class="text-center text-sm md:text-lg font-bold">{{ $q->question }}</h1>
                     <div class="flex justify-center mt-4 gap-4 md:gap-8 items-center">
                         <p class="font-bold">Disagree</p>
-                        @for ($index = 1; $index <= 5; $index++)
+                        @for ($i = 1; $i <= 5; $i++)
                             <div class="grid items-center justify-center">
                                 <div>
                                     <input 
@@ -25,11 +24,11 @@
                                         class="size-8" 
                                         name="question-{{ $q->id }}"
                                         wire:model.live="answers.{{ $q->id }}" 
-                                        value="{{ $index }}"
-                                        onclick="scrollToNext({{ $q->id }})"
+                                        value="{{ $i }}"
+                                        onclick="scrollToNext({{ $index }})"
                                     >
                                 </div>
-                                <label class="text-sm text-center">{{ $index }}</label>
+                                <label class="text-sm text-center">{{ $i }}</label>
                             </div>
                         @endfor
                         <p class="font-bold">Agree</p>
@@ -68,25 +67,28 @@
                     </div>
                 </div>
             @endif
+            <div class="mt-4">
+                <p class="text-sm text-gray-500">Top 3 Percentage: {{ number_format($this->topThreePercentage, 2) }}%</p>
+            </div>
         </div>
     </div>
+
+    @if($showSubmissionModal)
+        <livewire:quiz-submission :answers="$answers" :highest-types="$highestTypes" />
+    @endif
 </div>
 
 @script
-
 <script>
-        $wire.on('update-progress', event => {
-            const { answered, total } = event[0];
-            const progressBar = document.getElementById('progress-bar');
+    $wire.on('update-progress', event => {
+        const { answered, total } = event[0];
+        const progressBar = document.getElementById('progress-bar');
 
-            console.log('Updating progress bar:', answered, total);
+        console.log('Updating progress bar:', answered, total);
 
-            const percent = total > 0 ? (answered / total) * 100 : 0;
-            progressBar.style.width = percent + '%';
-            progressBar.innerHTML = `<p>${answered} / ${total}</p>`;
-        });
-
-        
+        const percent = total > 0 ? (answered / total) * 100 : 0;
+        progressBar.style.width = percent + '%';
+        progressBar.innerHTML = `<p>${answered} / ${total}</p>`;
+    });
 </script>
-
 @endscript

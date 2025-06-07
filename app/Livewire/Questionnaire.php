@@ -5,11 +5,21 @@ namespace App\Livewire;
 use Livewire\Component;
 use App\Models\PersonalityQuestion;
 use App\Models\PersonalityType;
+use App\Models\QuizResult;
 
 class Questionnaire extends Component
 {
     public $answers = [];
     public $highestTypes = [];
+    public $showSubmissionModal = false;
+    public $currentQuestionIndex = 0;
+
+    protected $listeners = ['question-answered'];
+
+    public function questionAnswered($index)
+    {
+        $this->currentQuestionIndex = $index;
+    }
 
     public function render()
     {
@@ -29,10 +39,9 @@ class Questionnaire extends Component
             }
         }
 
-
         return view('livewire.questionnaire', [
             'personalityQuestions' => $interleaved,
-        ]);
+        ])->layout('livewire.layouts.app');
     }
     
     public function submitAnswers()
@@ -47,7 +56,7 @@ class Questionnaire extends Component
                 if (!isset($points[$typeId])) {
                     $points[$typeId] = 0;
                 }
-                $points[$typeId] += $answer; // Assuming answer is a numeric value
+                $points[$typeId] += $answer;
             }
         }
 
@@ -58,11 +67,12 @@ class Questionnaire extends Component
         $highestTypeIds = array_keys(array_filter($points, fn($score) => $score === $maxScore));
         $this->highestTypes = PersonalityType::whereIn('id', $highestTypeIds)->get();
 
+        // Show the submission modal
+        $this->showSubmissionModal = true;
     }
 
     public function getAnsweredCountProperty()
     {
-        // Count how many questions have answers (non-empty)
         return count(array_filter($this->answers, fn($answer) => !is_null($answer) && $answer !== ''));
     }
 
@@ -70,8 +80,17 @@ class Questionnaire extends Component
     {
         $this->dispatch('update-progress', [
             'answered' => $this->answeredCount,
-            'total' => PersonalityQuestion::count(), // or use the interleaved count
+            'total' => PersonalityQuestion::count(),
         ]);
     }
 
+    public function getTopThreePercentageProperty()
+    {
+        $totalAnswers = count($this->answers);
+        if ($totalAnswers === 0) {
+            return 0;
+        }
+        $topThreeCount = min(3, $this->answeredCount);
+        return ($topThreeCount / $totalAnswers) * 100;
+    }
 }
