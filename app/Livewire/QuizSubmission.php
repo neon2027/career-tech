@@ -19,7 +19,7 @@ class QuizSubmission extends Component
     {
         $this->answers = $answers;
         $this->highestTypes = $highestTypes;
-        $this->personalityTypeId = $highestTypes->first()->id;
+        $this->personalityTypeId = 1;
     }
 
     public function submit()

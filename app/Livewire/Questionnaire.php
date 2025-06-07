@@ -46,6 +46,13 @@ class Questionnaire extends Component
     
     public function submitAnswers()
     {
+        // Check if all questions are answered
+        $totalQuestions = PersonalityQuestion::count();
+        if ($this->answeredCount < $totalQuestions) {
+            $this->addError('answers', 'Please answer all questions before submitting.');
+            return;
+        }
+
         $types = PersonalityType::pluck('name', 'id')->toArray();
         $points = [];
 
