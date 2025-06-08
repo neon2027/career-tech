@@ -78,6 +78,12 @@ class Questionnaire extends Component
 
         // Get all personality types that have this max score (handle tie)
         $highestTypeIds = array_keys(array_filter($points, fn($score) => $score === $maxScore));
+
+        // If there's a tie, limit to only the first two results
+        if (count($highestTypeIds) > 1) {
+            $highestTypeIds = array_slice($highestTypeIds, 0, 2);
+        }
+
         $this->highestTypes = PersonalityType::whereIn('id', $highestTypeIds)->get();
 
         // Show the submission modal and disable body scroll
@@ -117,6 +123,40 @@ class Questionnaire extends Component
 
         // Show success message
         session()->flash('message', 'All questions have been randomly answered for testing!');
+    }
+
+    public function fillTieAnswers()
+    {
+        // Get all questions grouped by personality type
+        $groupedQuestions = PersonalityQuestion::with('personalityType')
+            ->get()
+            ->groupBy('personality_type_id');
+
+        // Get the first two personality types for creating a tie
+        $personalityTypeIds = $groupedQuestions->keys()->take(2);
+
+        // Fill questions to create a tie between first two personality types
+        foreach ($groupedQuestions as $typeId => $questions) {
+            $score = in_array($typeId, $personalityTypeIds->toArray()) ? 5 : 1; // High score for first two, low for others
+
+            foreach ($questions as $question) {
+                $this->answers[$question->id] = $score;
+            }
+        }
+
+        // Save to session
+        session(['quiz_answers' => $this->answers]);
+
+        // Update progress
+        $this->dispatch('update-progress', [
+            'answered' => $this->answeredCount,
+            'total' => PersonalityQuestion::count(),
+        ]);
+
+        // Show success message
+        $firstType = PersonalityType::find($personalityTypeIds[0]);
+        $secondType = PersonalityType::find($personalityTypeIds[1]);
+        session()->flash('message', "Created a tie between {$firstType->name} and {$secondType->name} for testing!");
     }
 
     public function getAnsweredCountProperty()

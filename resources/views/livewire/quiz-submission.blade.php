@@ -13,15 +13,22 @@
     x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
     x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
 
-    <div class="flex min-h-full items-center justify-center p-4 text-center  sm:p-0">
+    <div class="flex min-h-full items-center justify-center p-4 text-center sm:p-0">
       <div
-        class="relative transform overflow-hidden rounded-lg bg-white py-[44px] px-[36px] text-left shadow-xl transition-all sm:w-full sm:max-w-lg ">
+        class="relative transform overflow-hidden rounded-lg bg-white py-[44px] px-[36px] text-left shadow-xl transition-all sm:w-full sm:max-w-lg">
+
         <div class="space-y-2 mb-6">
           <h1 class="text-2xl font-bold">
             Your results are ready!
           </h1>
-          <p class="text-gray-500">Enter your name and email to see your career matches.</p>
+          @if ($highestTypes->count() > 1)
+            <p class="text-gray-500">You have a tie between {{ $highestTypes->pluck('name')->join(' & ') }}! Enter your
+              details to see both results.</p>
+          @else
+            <p class="text-gray-500">Enter your name and email to see your career matches.</p>
+          @endif
         </div>
+
         <form wire:submit.prevent="submit" class="space-y-4">
           <div>
             <div class="mb-4">
@@ -46,7 +53,11 @@
           <div class="mt-5 grid grid-cols-1">
             <button type="submit"
               class="bg-gradient-to-r from-[#0C00CF] to-[#C00A29] text-white px-4 py-2 rounded-[10px] hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed">
-              Get My Results
+              @if ($highestTypes->count() > 1)
+                Get My Tie Results
+              @else
+                Get My Results
+              @endif
             </button>
           </div>
         </form>

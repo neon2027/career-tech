@@ -24,7 +24,7 @@
         </div>
       @endif
 
-      @if (app()->isLocal())
+      @if (!app()->isLocal())
         <div class="flex justify-center gap-4 mb-4">
           @if ($this->answeredCount > 0)
             <button wire:click="clearSession"
@@ -34,11 +34,17 @@
             </button>
           @endif
 
-          <!-- Testing Button - Always visible -->
+          <!-- Testing Buttons - Always visible -->
           <button wire:click="fillRandomAnswers"
             class="bg-yellow-500 text-black px-4 py-2 rounded hover:bg-yellow-600 transition-colors font-semibold border-2 border-yellow-700"
             title="For testing purposes only - fills all questions with random answers">
             🎲 Fill Random (Testing)
+          </button>
+
+          <button wire:click="fillTieAnswers"
+            class="bg-purple-500 text-white px-4 py-2 rounded hover:bg-purple-600 transition-colors font-semibold border-2 border-purple-700"
+            title="For testing purposes only - creates a tie between two personality types">
+            🤝 Create Tie (Testing)
           </button>
         </div>
       @endif
