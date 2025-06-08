@@ -96,7 +96,7 @@
     </div>
   </div>
 
-  @if ($showSubmissionModal)
+  @if (!$showSubmissionModal)
     <livewire:quiz-submission :answers="$answers" :highest-types="$highestTypes" />
   @endif
 </div>
