@@ -9,11 +9,11 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class PersonalityType extends Model
 {
-    protected $fillable = ['name', 'description'];
+    protected $fillable = ['name', 'title', 'description', 'summary', 'next_steps'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany<this, App\Models\PersonalityQuestion>
-     * 
+     *
      */
     public function personalityQuestions(): HasMany
     {

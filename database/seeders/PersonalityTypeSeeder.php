@@ -18,8 +18,10 @@ class PersonalityTypeSeeder extends Seeder
         $personalities = [
             [
                 'name' => 'Realistic',
+                'title' => 'The Doer',
                 'description' => 'You like hands-on work, physical setups, and practical problem-solving with tech equipment and infrastructure.',
-                'summary' => 'You’re the tech builder, the boots-on-the-ground expert. You keep networks alive, devices running, and infrastructure secure.',
+                'summary' => 'You\'re the tech builder, the boots-on-the-ground expert. You keep networks alive, devices running, and infrastructure secure.',
+                'next_steps' => 'Now that you\'ve seen which hands-on IT careers match your strengths, it\'s time to take action. Choose one career that excites you the most—whether it\'s working with hardware, networks, or infrastructure—and start exploring courses, certifications, or internships in that area. Look into real-world projects or apprenticeships that give you direct experience. Building skills and gaining on-the-ground knowledge will be key to landing your dream career in tech.',
                 'careers' => [
                     ['name' => 'IT Support Specialist', 'description' => 'Help users solve their tech problems, both hardware and software.'],
                     ['name' => 'Network Administrator', 'description' => 'Set up and maintain the computer networks so everyone stays connected.'],
@@ -47,8 +49,10 @@ class PersonalityTypeSeeder extends Seeder
             ],
             [
                 'name' => 'Investigative',
+                'title' => 'The Thinker',
                 'description' => 'You love deep problem-solving, analytics, and building intelligent systems through research and logic.',
-                'summary' => 'You’re the mind behind smart solutions—analyzing, programming, and innovating tech systems.',
+                'summary' => 'You\'re the mind behind smart solutions—analyzing, programming, and innovating tech systems.',
+                'next_steps' => 'You thrive on solving complex problems and working with data or code. Pick a career path that sparks your curiosity—maybe software development, AI, or cybersecurity—and dive into learning. Start by taking online courses, experimenting with personal projects, or contributing to open-source work. Strengthen your analytical and technical skills to unlock exciting roles that challenge your mind and make a big impact.',
                 'careers' => [
                     ['name' => 'Software Developer', 'description' => 'Write code that powers websites, apps, and software tools.'],
                     ['name' => 'Data Scientist', 'description' => 'Analyze large sets of data to uncover insights and help businesses make smarter decisions.'],
@@ -59,7 +63,7 @@ class PersonalityTypeSeeder extends Seeder
                     ['name' => 'Blockchain Developer', 'description' => 'Build secure, decentralized apps and systems.'],
                     ['name' => 'Systems Analyst', 'description' => 'Study IT systems and recommend improvements.'],
                     ['name' => 'Algorithm Engineer', 'description' => 'Develop efficient algorithms to optimize software performance.'],
-                    ['name' => 'Database Administrator', 'description' => 'Organize and secure company data so it’s always available.'],
+                    ['name' => 'Database Administrator', 'description' => 'Organize and secure company data so it\'s always available.'],
                 ],
                 'questions' => [
                     'I enjoy solving logic-based problems in code or data.',
@@ -76,8 +80,10 @@ class PersonalityTypeSeeder extends Seeder
             ],
             [
                 'name' => 'Artistic',
-                'description' => 'You’re creative, expressive, and love shaping how users experience digital products through design and innovation.',
+                'title' => 'The Creator',
+                'description' => 'You\'re creative, expressive, and love shaping how users experience digital products through design and innovation.',
                 'summary' => 'You bring tech to life through beautiful, intuitive, and engaging designs.',
+                'next_steps' => 'Your creative energy belongs in tech! Choose a career that lets you express your ideas through design, visuals, or interactive media. Begin by learning design tools (like Figma or Adobe Suite), coding for front-end, or animation software. Build a portfolio that showcases your creativity and tech skills. The more you create, the more you\'ll attract opportunities that let your artistry shine in the digital world.',
                 'careers' => [
                     ['name' => 'UI Designer', 'description' => 'Craft beautiful and intuitive interfaces for websites and apps.'],
                     ['name' => 'UX Designer', 'description' => 'Research and design experiences that make digital products easy and enjoyable to use.'],
@@ -105,8 +111,10 @@ class PersonalityTypeSeeder extends Seeder
             ],
             [
                 'name' => 'Social',
+                'title' => 'The Helper',
                 'description' => 'You enjoy helping others understand and use technology, collaborating, and improving user experiences through communication.',
-                'summary' => 'You’re the friendly guide who bridges the gap between tech and people.',
+                'summary' => 'You\'re the friendly guide who bridges the gap between tech and people.',
+                'next_steps' => 'You have a gift for making tech more human. Pick a role that lets you connect, teach, or support others. You could begin by volunteering to help people with tech, hosting workshops, or learning communication-focused tools (like Notion, Zoom, or LMS platforms). Explore certifications in IT support, teaching tech, or UX research. Your ability to guide others will open doors to meaningful and people-driven tech careers.',
                 'careers' => [
                     ['name' => 'Technical Support Specialist', 'description' => 'Help users troubleshoot and understand technology.'],
                     ['name' => 'IT Trainer', 'description' => 'Teach others how to use software and tools effectively.'],
@@ -129,13 +137,15 @@ class PersonalityTypeSeeder extends Seeder
                     'I feel confident when presenting technical topics to a group.',
                     'I like helping clients or colleagues feel comfortable with new technology.',
                     'I care about user needs and their digital experience.',
-                    'I feel motivated when I use tech to make someone’s life easier.',
+                    'I feel motivated when I use tech to make someone\'s life easier.',
                 ],
             ],
             [
                 'name' => 'Enterprising',
-                'description' => 'You’re a natural leader who drives projects, persuades teams, and builds tech businesses or products.',
-                'summary' => 'You’re the visionary who turns ideas into thriving tech ventures and teams.',
+                'title' => 'The Persuader',
+                'description' => 'You\'re a natural leader who drives projects, persuades teams, and builds tech businesses or products.',
+                'summary' => 'You\'re the visionary who turns ideas into thriving tech ventures and teams.',
+                'next_steps' => 'You\'re a leader in the making, ready to build, pitch, and grow. Choose a role that aligns with your drive—maybe product management, sales, or launching your own startup. Start learning business and tech fundamentals, explore product strategy courses, or join startup communities. Practice leadership and communication skills. Your bold ideas can shape the future of tech—so start building the path that excites you most.',
                 'careers' => [
                     ['name' => 'Product Manager', 'description' => 'Lead the development and strategy of new tech products.'],
                     ['name' => 'Startup Founder', 'description' => 'Create and grow your own tech company.'],
@@ -149,7 +159,7 @@ class PersonalityTypeSeeder extends Seeder
                     ['name' => 'Innovation Manager', 'description' => 'Lead new tech initiatives and product ideas.'],
                 ],
                 'questions' => [
-                    'I enjoy leading projects in tech, even when it’s challenging.',
+                    'I enjoy leading projects in tech, even when it\'s challenging.',
                     'I like pitching digital product ideas or presenting to stakeholders.',
                     'I enjoy taking calculated risks to launch or test tech ventures.',
                     'I like selling or promoting tech tools or services.',
@@ -163,8 +173,10 @@ class PersonalityTypeSeeder extends Seeder
             ],
             [
                 'name' => 'Conventional',
-                'description' => 'You’re detail-focused, love order and accuracy, and thrive in managing data, processes, and standards.',
+                'title' => 'The Organizer',
+                'description' => 'You\'re detail-focused, love order and accuracy, and thrive in managing data, processes, and standards.',
                 'summary' => 'You keep the tech world organized, efficient, and compliant.',
+                'next_steps' => 'You shine when things are structured and efficient. Pick a role that taps into your precision and love for systems—like QA testing, auditing, or tech documentation. Get familiar with tools like Excel, SQL, Jira, or ITIL frameworks. Explore certifications in quality assurance, data management, or process improvement. With the right skills, you\'ll become the backbone of reliability and order in any tech team.',
                 'careers' => [
                     ['name' => 'QA Tester', 'description' => 'Test software to find bugs and ensure it works correctly.'],
                     ['name' => 'Database Administrator', 'description' => 'Manage data storage and keep it secure.'],
@@ -195,14 +207,16 @@ class PersonalityTypeSeeder extends Seeder
         foreach ($personalities as $personality) {
             $type = PersonalityType::create([
                 'name' => $personality['name'],
+                'title' => $personality['title'],
                 'description' => $personality['description'],
                 'summary' => $personality['summary'],
+                'next_steps' => $personality['next_steps'],
             ]);
-        
+
             foreach ($personality['careers'] as $careerData) {
                 // Try to find an existing career by name
                 $career = Career::where('name', $careerData['name'])->first();
-        
+
                 if (!$career) {
                     // Create new career if not found
                     $career = Career::create([
@@ -217,7 +231,7 @@ class PersonalityTypeSeeder extends Seeder
                     $career->save();
                 }
             }
-        
+
             foreach ($personality['questions'] as $question) {
                 PersonalityQuestion::create([
                     'personality_type_id' => $type->id,
@@ -225,6 +239,6 @@ class PersonalityTypeSeeder extends Seeder
                 ]);
             }
         }
-        
+
     }
 }

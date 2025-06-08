@@ -37,6 +37,9 @@ class QuizSubmission extends Component
             'personality_type_id' => $this->personalityTypeId,
         ]);
 
+        // Clear the quiz answers from session since quiz is complete
+        session()->forget('quiz_answers');
+
         // Redirect to results page
         return redirect()->route('quiz.results', ['id' => $result->id]);
     }

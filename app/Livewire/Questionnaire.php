@@ -14,7 +14,13 @@ class Questionnaire extends Component
     public $showSubmissionModal = false;
     public $currentQuestionIndex = 0;
 
-    protected $listeners = ['question-answered'];
+    protected $listeners = ['question-answered', 'modal-closed'];
+
+    public function mount()
+    {
+        // Load answers from session if they exist
+        $this->answers = session('quiz_answers', []);
+    }
 
     public function questionAnswered($index)
     {
@@ -43,7 +49,7 @@ class Questionnaire extends Component
             'personalityQuestions' => $interleaved,
         ])->layout('livewire.layouts.app');
     }
-    
+
     public function submitAnswers()
     {
         // Check if all questions are answered
@@ -74,8 +80,43 @@ class Questionnaire extends Component
         $highestTypeIds = array_keys(array_filter($points, fn($score) => $score === $maxScore));
         $this->highestTypes = PersonalityType::whereIn('id', $highestTypeIds)->get();
 
-        // Show the submission modal
+        // Show the submission modal and disable body scroll
         $this->showSubmissionModal = true;
+        $this->dispatch('modal-opened');
+    }
+
+    public function closeModal()
+    {
+        $this->showSubmissionModal = false;
+        $this->dispatch('modal-closed');
+    }
+
+    public function modalClosed()
+    {
+        $this->showSubmissionModal = false;
+    }
+
+    public function fillRandomAnswers()
+    {
+        // Get all questions
+        $questions = PersonalityQuestion::all();
+
+        // Fill each question with a random answer (1-5)
+        foreach ($questions as $question) {
+            $this->answers[$question->id] = rand(1, 5);
+        }
+
+        // Save to session
+        session(['quiz_answers' => $this->answers]);
+
+        // Update progress
+        $this->dispatch('update-progress', [
+            'answered' => $this->answeredCount,
+            'total' => PersonalityQuestion::count(),
+        ]);
+
+        // Show success message
+        session()->flash('message', 'All questions have been randomly answered for testing!');
     }
 
     public function getAnsweredCountProperty()
@@ -85,8 +126,24 @@ class Questionnaire extends Component
 
     public function updatedAnswers()
     {
+        // Save answers to session whenever they're updated
+        session(['quiz_answers' => $this->answers]);
+
         $this->dispatch('update-progress', [
             'answered' => $this->answeredCount,
+            'total' => PersonalityQuestion::count(),
+        ]);
+    }
+
+    public function clearSession()
+    {
+        session()->forget('quiz_answers');
+        $this->answers = [];
+        $this->highestTypes = [];
+        $this->showSubmissionModal = false;
+
+        $this->dispatch('update-progress', [
+            'answered' => 0,
             'total' => PersonalityQuestion::count(),
         ]);
     }
