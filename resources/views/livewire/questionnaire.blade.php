@@ -24,7 +24,7 @@
         </div>
       @endif
 
-      @if (app()->isLocal())
+      @if (!app()->isLocal())
         <div class="flex justify-center gap-4 mb-4">
           @if ($this->answeredCount > 0)
             <button wire:click="clearSession"
