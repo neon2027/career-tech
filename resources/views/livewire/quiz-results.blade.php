@@ -39,10 +39,13 @@
         x-transition:enter-end="opacity-100 transform translate-y-0"
         x-transition:leave="transition ease-in duration-200"
         x-transition:leave-start="opacity-100 transform translate-y-0"
-        x-transition:leave-end="opacity-0 transform -translate-y-2" class="bg-white rounded-lg shadow-lg p-6">
+        x-transition:leave-end="opacity-0 transform -translate-y-2" class="bg-white rounded-lg shadow-lg p-6"
+        x-data="{ showAll: false }">
         <div class="space-y-4">
-          @foreach ($personalityScores as $score)
-            <div class="flex items-center justify-between">
+          @foreach ($personalityScores as $index => $score)
+            <div class="flex items-center justify-between" x-show="showAll || {{ $index }} < 2"
+              x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0"
+              x-transition:enter-end="opacity-100">
               <div class="flex items-center space-x-3">
                 <span class="text-2xl">
                   @if ($score->personalityType->name === 'Realistic')
@@ -82,6 +85,15 @@
             </div>
           @endforeach
         </div>
+
+        @if (count($personalityScores) > 2)
+          <div class="mt-6 text-center">
+            <button @click="showAll = !showAll"
+              class="px-4 py-2 text-sm font-medium text-indigo-600 hover:text-indigo-800 border border-indigo-300 hover:border-indigo-400 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+              <span x-text="showAll ? 'Show Less' : 'View More ({{ count($personalityScores) - 2 }} more)'"></span>
+            </button>
+          </div>
+        @endif
       </div>
     </div>
 
