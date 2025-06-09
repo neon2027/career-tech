@@ -21,7 +21,8 @@
       <button @click="scoresOpen = !scoresOpen" class="w-full text-left focus:outline-none">
         <div
           class="flex items-center justify-center gap-4 mb-8 bg-gradient-to-r from-indigo-50 to-purple-50 p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300">
-          <h2 class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600">
+          <h2
+            class="md:text-2xl text-lg font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600">
             Your Personality Score Breakdown</h2>
           <div class="text-xl transform transition-all duration-300 text-indigo-600 hover:text-purple-600"
             :class="scoresOpen ? 'rotate-180' : ''">
@@ -64,7 +65,7 @@
                 </div>
               </div>
 
-              <div class="flex items-center space-x-4">
+              <div class="md:flex grid items-center space-x-4">
                 <div class="text-right">
                   <div class="font-bold text-xl text-blue-600">{{ number_format($score->percentage, 1) }}%</div>
                   <div class="text-sm text-gray-500">{{ $score->total_score }}/{{ $score->max_possible_score }}</div>
