@@ -16,6 +16,74 @@
   </div>
 
   <div class="max-w-3xl mx-auto py-6 sm:px-6 lg:px-8 px-4">
+    {{-- Personality Scores Breakdown --}}
+    <div class="mb-12" x-data="{ scoresOpen: false }">
+      <button @click="scoresOpen = !scoresOpen" class="w-full text-left focus:outline-none">
+        <div
+          class="flex items-center justify-center gap-4 mb-8 bg-gradient-to-r from-indigo-50 to-purple-50 p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300">
+          <h2 class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600">
+            Your Personality Score Breakdown</h2>
+          <div class="text-xl transform transition-all duration-300 text-indigo-600 hover:text-purple-600"
+            :class="scoresOpen ? 'rotate-180' : ''">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </div>
+        </div>
+      </button>
+
+      <div x-show="scoresOpen" x-transition:enter="transition ease-out duration-300"
+        x-transition:enter-start="opacity-0 transform -translate-y-2"
+        x-transition:enter-end="opacity-100 transform translate-y-0"
+        x-transition:leave="transition ease-in duration-200"
+        x-transition:leave-start="opacity-100 transform translate-y-0"
+        x-transition:leave-end="opacity-0 transform -translate-y-2" class="bg-white rounded-lg shadow-lg p-6">
+        <div class="space-y-4">
+          @foreach ($personalityScores as $score)
+            <div class="flex items-center justify-between">
+              <div class="flex items-center space-x-3">
+                <span class="text-2xl">
+                  @if ($score->personalityType->name === 'Realistic')
+                    💪
+                  @elseif($score->personalityType->name === 'Investigative')
+                    🧠
+                  @elseif($score->personalityType->name === 'Artistic')
+                    🎨
+                  @elseif($score->personalityType->name === 'Social')
+                    💬
+                  @elseif($score->personalityType->name === 'Enterprising')
+                    🚀
+                  @elseif($score->personalityType->name === 'Conventional')
+                    📋
+                  @endif
+                </span>
+                <div>
+                  <h3 class="font-semibold text-lg">{{ $score->personalityType->name }}</h3>
+                  <p class="text-sm text-gray-600">({{ $score->personalityType->title }})</p>
+                </div>
+              </div>
+
+              <div class="flex items-center space-x-4">
+                <div class="text-right">
+                  <div class="font-bold text-xl text-blue-600">{{ number_format($score->percentage, 1) }}%</div>
+                  <div class="text-sm text-gray-500">{{ $score->total_score }}/{{ $score->max_possible_score }}</div>
+                </div>
+
+                <div class="w-32">
+                  <div class="bg-gray-200 rounded-full h-3">
+                    <div
+                      class="bg-gradient-to-r from-blue-500 to-purple-500 h-3 rounded-full transition-all duration-500 ease-out"
+                      style="width: {{ $score->percentage }}%"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          @endforeach
+        </div>
+      </div>
+    </div>
+
     @if ($isTie)
       {{-- Tabbed Interface for Tie Results --}}
       <div x-data="{ activeTab: '{{ $personalityTypes->first()->id }}' }" class="w-full">
@@ -84,7 +152,7 @@
               @if ($type->next_steps)
                 <div class="mt-8">
                   <h1 class="text-2xl font-bold mb-8 text-center">What to Do Next?</h1>
-                  <div class="rounded-lg">
+                  <div class="p-6 rounded-lg">
                     <p class="text-sm text-gray-700">{{ $type->next_steps }}</p>
                   </div>
                 </div>
@@ -122,7 +190,7 @@
         @if ($personalityTypes->first()->next_steps)
           <div class="mt-8">
             <h1 class="text-2xl font-bold mb-8 text-center">What to Do Next?</h1>
-            <div class="rounded-lg">
+            <div class=" p-6 rounded-lg">
               <p class="text-sm text-gray-700">{{ $personalityTypes->first()->next_steps }}</p>
             </div>
           </div>

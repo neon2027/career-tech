@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class QuizResult extends Model
 {
@@ -22,5 +23,13 @@ class QuizResult extends Model
     public function personalityType(): BelongsTo
     {
         return $this->belongsTo(PersonalityType::class);
+    }
+
+    /**
+     * Get all personality scores for this quiz result.
+     */
+    public function personalityScores(): HasMany
+    {
+        return $this->hasMany(QuizPersonalityScore::class);
     }
 }

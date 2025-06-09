@@ -11,12 +11,14 @@ class QuizResults extends Component
 {
     public $result;
     public $personalityTypes;
+    public $personalityScores;
     public $isTie = false;
 
     public function mount($id)
     {
-        $this->result = QuizResult::findOrFail($id);
+        $this->result = QuizResult::with(['personalityScores.personalityType'])->findOrFail($id);
         $this->calculatePersonalityTypes();
+        $this->loadPersonalityScores();
     }
 
     private function calculatePersonalityTypes()
@@ -48,6 +50,15 @@ class QuizResults extends Component
         }
 
         $this->personalityTypes = PersonalityType::whereIn('id', $highestTypeIds)->get();
+    }
+
+    private function loadPersonalityScores()
+    {
+        // Get all personality scores for this quiz result, ordered by percentage descending
+        $this->personalityScores = $this->result->personalityScores()
+            ->with('personalityType')
+            ->orderBy('percentage', 'desc')
+            ->get();
     }
 
     public function render()
